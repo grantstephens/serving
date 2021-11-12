@@ -1,5 +1,40 @@
 workspace(name = "tf_serving")
 
+# Import Yggdrasil Decision Forests.
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name="ydf",
+    urls=[
+        "https://github.com/google/yggdrasil-decision-forests/archive/refs/tags/0.2.0.zip"],
+    strip_prefix="yggdrasil-decision-forests-0.2.0",
+)
+
+# Load the YDF dependencies. However, skip the ones already injected by
+# TensorFlow.
+load("@ydf//yggdrasil_decision_forests:library.bzl",
+     ydf_load_deps="load_dependencies")
+ydf_load_deps(
+    exclude_repo=[
+        "absl",
+        "protobuf",
+        "zlib",
+        "farmhash",
+        "gtest",
+        "tensorflow",
+        "grpc"
+    ],
+    repo_name="@ydf",
+)
+
+# Import TensorFlow Decision Forests.
+load("//tensorflow_serving:repo.bzl", "tensorflow_http_archive")
+http_archive(
+    name="org_tensorflow_decision_forests",
+    urls=[
+        "https://github.com/tensorflow/decision-forests/archive/refs/tags/0.2.1.zip"],
+    strip_prefix="decision-forests-0.2.1",
+)
+
 # ===== TensorFlow dependency =====
 #
 # TensorFlow is imported here instead of in tf_serving_workspace() because
