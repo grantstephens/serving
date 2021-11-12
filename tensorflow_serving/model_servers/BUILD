@@ -329,6 +329,7 @@ cc_library(
 SUPPORTED_TENSORFLOW_OPS = if_v2([]) + if_not_v2([
     "@org_tensorflow//tensorflow/contrib:contrib_kernels",
     "@org_tensorflow//tensorflow/contrib:contrib_ops_op_lib",
+    "@org_tensorflow_decision_forests//tensorflow_decision_forests/tensorflow/ops/inference:kernel_and_op",
 ]) + [
     "@org_tensorflow_text//tensorflow_text:ops_lib",
 ]
