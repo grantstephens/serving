@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pkg -i bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server_deb.deb; apt-get install -y -f
+RUN dpkg -i bazel-bin/tensorflow_serving/model_servers/tensorflow_model_server_deb.deb; apt-get install -y -f
 # Expose ports
 # gRPC
 EXPOSE 8500
